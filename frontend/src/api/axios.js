@@ -3,7 +3,7 @@ import axios from 'axios';
 console.log("Backend URL:", process.env.REACT_APP_BACKEND_URL);  // <-- Add this line
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL, // Use environment variable
+  baseURL: "https://clinic-scheduler-backend-t7fh.onrender.com", // Use environment variable
 });
 
 API.interceptors.request.use((config) => {
