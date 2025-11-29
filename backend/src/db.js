@@ -1,15 +1,21 @@
-// src/db.js
 const mysql = require('mysql2/promise');
-require('dotenv').config();
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'mysql',
-  user: process.env.DB_USER || 'clinic_user',
-  password: process.env.DB_PASSWORD || 'userpassword',
-  database: process.env.DB_NAME || 'clinic_db',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  ssl: {
+    rejectUnauthorized: true,
+    ca: process.env.DB_SSL_CA
+  }
 });
+
+pool.getConnection()
+  .then(() => console.log("Connected to Aiven MySQL successfully"))
+  .catch(err => console.log("DB Connection Error:", err));
 
 module.exports = pool;
